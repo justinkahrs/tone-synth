@@ -17,8 +17,12 @@ class Synth {
     portamento: 0.05,
   }).toMaster()
 
-  play = (note, playing) => {
-    playing ? this.synth.triggerAttack(midiToFreq(note)) : this.synth.triggerRelease()
+  play = note => {
+    this.synth.triggerAttack(midiToFreq(note))
+  }
+
+  stop = () => {
+    this.synth.triggerRelease()
   }
 }
 export default Synth

@@ -7,6 +7,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-piano": "^1.1.0",
+    "react-rotary-knob": "^1.1.1",
     "react-scripts": "1.1.4",
     "tone": "^0.12.80"
   },

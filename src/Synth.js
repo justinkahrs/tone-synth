@@ -1,28 +1,32 @@
 import Tone from 'tone'
 import midiToFreq from './utils/midiToFreq'
-class Synth {
+
+const Synth = ({
   synth = new Tone.Synth({
     oscillator: {
-      type: 'amtriangle',
-      harmonicity: 0.5,
-      modulationType: 'sine',
+      type: 'square',
     },
-    envelope: {
-      attackCurve: 'exponential',
-      attack: 0.05,
-      decay: 0.2,
-      sustain: 0.2,
-      release: 1.5,
-    },
-    portamento: 0.05,
-  }).toMaster()
+  }),
+  filter = new Tone.Filter({
+    type: 'lowpass',
+    frequency: 300,
+    rolloff: -12,
+    Q: 0.5,
+    gain: 0.5,
+  }),
+  gain = new Tone.Gain({
+    gain: 0.8,
+    convert: true,
+  }),
+}) => ({
+  synth,
+  filter,
+  gain,
+  play: note =>
+    synth
+      .connect(filter.connect(gain.toMaster()))
+      .triggerAttack(midiToFreq(note)),
+  stop: () => synth.triggerRelease(),
+})
 
-  play = note => {
-    this.synth.triggerAttack(midiToFreq(note))
-  }
-
-  stop = () => {
-    this.synth.triggerRelease()
-  }
-}
 export default Synth
